@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="/static/ECharts/echarts.min.js"></script>
+<script type="text/javascript" src="/static/jquery/jquery.min.js"></script>
+
+</head>
+<body>
+    <div id="main" style="width:600px;height:400px;border:1px solid black;"></div>
+    {%for data in datas%}
+    <div class="data" style="display: none;">{{data[0]}}:{{data[1]}}:{{data[2]}}:{{data[3]}}</div>
+    {%end%}
+    <script type="text/javascript">
+        var temps = new Array();
+        var datas = new Array();
+        var x1 = new Array();
+        var x2 = new Array();
+        var y1 = new Array();
+        var y2 = new Array();
+        $('.data').each(function(key,value){
+            temps[key] = $(this).html();
+        });
+        for(i=0;i<temps.length;i++){
+            var data = new Array();
+            data = temps[i].split(':');
+            // datas.push(data);
+            x1.push(data[0]);
+            x2.push(data[1]);
+            y1.push(data[2]);
+            y2.push(data[3]);
+        }
+        console.log(x1);
+        console.log(y1);
+        var myChart = echarts.init(document.getElementById('main'));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                // data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                data: x1
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',//pie
+                // data: [5, 20, 36, 10, 10, 20]
+                data: y1
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+    </script>
+</body>
+</html>
